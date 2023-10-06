@@ -125,7 +125,7 @@ $null = New-Module starship {
 
         # We start from the premise that the command executed correctly, which covers also the fresh console.
         $lastExitCodeForPrompt = 0
-        if ($lastCmd = Get-History -Count 1) {
+        if (($lastCmd = Get-History -Count 1) -and ((Get-Date).Subtract($lastCmd.EndExecutionTime)).TotalMilliseconds -lt 50) {
             # In case we have a False on the Dollar hook, we know there's an error.
             if (-not $origDollarQuestion) {
                 # We retrieve the InvocationInfo from the most recent error using $global:error[0]
